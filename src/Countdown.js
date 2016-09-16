@@ -4,16 +4,14 @@ import './Countdown.css';
 export default class Countdown extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      seconds: {
-        const endDate = new Date("January 1, 2017").getTime(); 
-        const currentDate = new Date().getTime();
-        return currentDate - endDate;
-      }
-    };
+    const endDate = new Date("January 1, 2017").getTime(); 
+    const currentDate = new Date().getTime(); 
+    const seconds = (endDate - currentDate) / 1000; 
+    this.state = { seconds };
   }
 
-  startTimer() {
+
+  componentDidMount() {
     const timer = setInterval(() => {
       const seconds = this.state.seconds;
       if (seconds <= 0) {
@@ -23,30 +21,38 @@ export default class Countdown extends Component {
         this.setState({ seconds:  seconds - 1 });
       }
     }, 1000)
-  } 
-
-
-  handleClick() {
-    this.startTimer();
   }
+
+ 
   render() {
     return (
       <div>
-        <Hour seconds={this.state.seconds}/>
-        <Minute seconds={this.state.seconds}/>
-        <Second seconds={this.state.seconds}/>
-        <button onClick={ this.handleClick.bind(this) }>Start Countdown!</button>
+        <Title />
+        <Hour seconds={this.state.seconds} />
+        <Minute seconds={this.state.seconds} />
+        <Second seconds={this.state.seconds} />
       </div>
     );
   }
 }
 
+class Title extends Component {
+  render(){
+    return (
+      <div className="title">
+        <h1>COUNTDOWN</h1>
+      </div>
+    );
+  }
+} 
+
 class Second extends Component {
   render() {
-    const roundedSeconds = this.props.seconds % 60;
+    const roundedSeconds = Math.floor(this.props.seconds % 60);
     return (
       <div className="seconds">
-        <p>{ roundedSeconds } seconds</p>
+        <p>{ roundedSeconds }</p>
+        <h2>SECONDS</h2>
       </div>
     );
   }
@@ -54,10 +60,11 @@ class Second extends Component {
 
 class Minute extends Component {
   render() {
-    const minutes = Math.floor(this.props.seconds / 60)
+    const minutes = Math.floor(this.props.seconds / 60 % 24)
     return (
       <div className="minutes">
-        <p>{ minutes } minutes</p>
+        <p>{ minutes } : </p>
+        <h2>MINUTES</h2>
       </div>
     );
   }
@@ -68,7 +75,8 @@ class Hour extends Component {
     const hours = Math.floor(this.props.seconds / 3600)
     return (
       <div className="hours">
-        <p>{hours} hours</p>
+        <p>{hours} :</p>
+        <h2>HOURS</h2>
       </div>
     );
   }
