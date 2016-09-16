@@ -49,9 +49,10 @@ class Title extends Component {
 class Second extends Component {
   render() {
     const roundedSeconds = Math.floor(this.props.seconds % 60);
+    const addDigitSeconds = (roundedSeconds < 10) ? '0' + roundedSeconds : roundedSeconds;
     return (
       <div className="seconds">
-        <p>{ roundedSeconds }</p>
+        <p>{ addDigitSeconds }</p>
         <h2>SECONDS</h2>
       </div>
     );
@@ -60,10 +61,11 @@ class Second extends Component {
 
 class Minute extends Component {
   render() {
-    const minutes = Math.floor(this.props.seconds / 60 % 24)
+    const minutes = Math.floor(this.props.seconds / 60 % 24);
+    const addDigitMinutes = (minutes < 10) ? '0' + minutes : minutes;
     return (
       <div className="minutes">
-        <p>{ minutes } : </p>
+        <p>{ addDigitMinutes } : </p>
         <h2>MINUTES</h2>
       </div>
     );
@@ -72,10 +74,11 @@ class Minute extends Component {
 
 class Hour extends Component {
   render() {
-    const hours = Math.floor(this.props.seconds / 3600)
+    const hours = Math.floor(this.props.seconds / 3600);
+    const addDigitHours = (hours < 10) ? '0' + hours : hours;
     return (
       <div className="hours">
-        <p>{hours} :</p>
+        <p>{ addDigitHours } :</p>
         <h2>HOURS</h2>
       </div>
     );
